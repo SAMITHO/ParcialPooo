@@ -7,6 +7,7 @@ package proyectomundial.DAO;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JOptionPane;
 import proyectomundial.model.Seleccion;
 import proyectomundial.util.BasedeDatos;
 import static proyectomundial.util.BasedeDatos.ejecutarSQL;
@@ -19,6 +20,27 @@ public class SeleccionDAO {
 
     public SeleccionDAO() {
         BasedeDatos.conectar();
+    }
+    
+    public boolean comprobarLogin(String usuario, String contrasena){
+        String sql = "SELECT username, password FROM poo.users WHERE username = '" + usuario + "' and password = '" + contrasena + "'";    
+        //BasedeDatos.conectar();
+        try {
+            ResultSet result = BasedeDatos.ejecutarSQL(sql);
+            
+            if(result != null) {
+                JOptionPane.showMessageDialog(null, "Sesion iniciada " + usuario);
+              return true;
+            }
+            else{
+                JOptionPane.showMessageDialog(null, "Sesion no encontrada ");
+              return false;
+            }
+        } catch (Exception e) {
+            System.out.println(e.toString());
+            System.out.println("Error consultando usuario");
+        }
+        return false;
     }
     
     public boolean registrarSeleccion(Seleccion seleccion) {
