@@ -18,7 +18,7 @@ import java.util.logging.Logger;
  * @author miguelropero
  */
 public class BasedeDatos {
-    
+
     private static String bd = "unisimon";
     private static String user = "unisimon_user";
     private static String password = "11k1WiZg5ekiFQYHx9Bog6W7cTArSZea";
@@ -27,10 +27,10 @@ public class BasedeDatos {
 
     public static boolean hayConexion() {
         return (conexion != null);
-    }  
+    }
 
     public static void conectar() {
-        
+
         try {
             Class.forName("org.postgresql.Driver");
             conexion = DriverManager
@@ -41,7 +41,7 @@ public class BasedeDatos {
             Logger.getLogger(BasedeDatos.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     public static void desconectar() {
         try {
             conexion.close();
@@ -71,7 +71,6 @@ public class BasedeDatos {
             return false;
         }
     }
-
 
     public static ResultSet ejecutarSQL(String consultaSQL) throws Exception {
         if (hayConexion()) {
@@ -108,29 +107,29 @@ public class BasedeDatos {
 
     public static void main(String args[]) throws Exception {
         conectar();
-    
-        if(hayConexion()) {
+
+        if (hayConexion()) {
             System.out.println("Hay conexion");
-            String sql = "Select equipo, director from poo.equipo";
-            
+            String sql = "Select equipo, director from c_gomez11.seleccion";
+
             ArrayList<String> lista = getConsultaSQL(sql);
-            for(String cadena : lista) {
+            for (String cadena : lista) {
                 System.out.println(cadena);
             }
-            
+
             System.out.println("------------------------");
             ResultSet y = ejecutarSQL(sql);
-                
-            while (y.next()) {  
-                System.out.println(y.getString("equipo") + " - " + y.getString("director")); 
+
+            while (y.next()) {
+                System.out.println(y.getString("equipo") + " - " + y.getString("director"));
             }
-        
+
         } else {
             System.out.println("No Hay conexion");
             conectar();
         }
-        
+
         //desconectar();
     }
-    
+
 }
